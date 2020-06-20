@@ -22,13 +22,6 @@
   </v-layout> -->
   <v-container>
     <v-card>
-      <!-- <v-expansion-panel>
-        <v-expansion-panel v-for="panel in panels" :key="panel">
-          <v-expansion-panel-content>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panel> -->
       <v-row>
         <v-btn @click="showFiltersDialog()" width="100%">Show Filters</v-btn>
       </v-row>
@@ -50,6 +43,9 @@ export default {
   },
   data: () => {
     return {
+      products: [
+
+      ]
     };
   },
   computed: {
