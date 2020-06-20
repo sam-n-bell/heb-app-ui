@@ -4,7 +4,9 @@ import jsonwebtoken from "jsonwebtoken"
 
 const state = () => ({
     loginLoading: false,
+    registerLoading: false,
     loginError: null,
+    registerError: null,
     jwt: null,
     user: null
 })
@@ -13,7 +15,7 @@ const getters = {
 
     isAuthenticated: state => {
         const authToken = Cookie.get(constants.authCookieName)
-        return !!authToken
+        return !!authToken || !!state.user
     }
 
 }
@@ -23,23 +25,46 @@ const actions = {
     async login({commit}, credentials) {
         commit("login")
         try {
-            let jwt = await this.$axios.post(constants.urls.login, credentials)
+            let jwt = await this.$axios.post(constants.apiUrls.login, credentials)
             commit("loginSuccess")
             commit("saveJWT", jwt.data)
         } catch (error) {
-            console.log(error)
-            console.log(error.response)
             if (error.response && error.response.data.message) {
                 commit("loginFailure", error.response.data.message)
             } else {
                 commit("loginFailure", error.message)
             }
         }
+    },
+    async register({commit}, credentials) {
+        commit("register")
+        try {
+            await this.$axios.post(constants.apiUrls.register, credentials)
+            commit("registerSuccess")
+        } catch (error) {
+            if (error.response && error.response.data.message) {
+                commit("registerFailure", error.response.data.message)
+            } else {
+                commit("registerFailure", error.message)
+            }
+        }
     }
 }
 
 const mutations = {
-
+    register(state) {
+        state.registerLoading = true;
+        state.registerErrors = null;
+    },
+    registerSuccess(state) {
+        state.registerLoading = false;
+        state.registerErrors = null;
+        this.$router.push(constants.uiUrls.login);
+    },
+    registerFailure(state, error) {
+        state.registerLoading = false;
+        state.registerErrors = error;
+    },
     login(state) {
         state.loginLoading = true;
         state.loginError = null;
@@ -58,7 +83,6 @@ const mutations = {
         state.user = decoded.identity.first_name;
     },
     loginFailure(state, error) {
-        console.log(`setting error to ${error}`);
         Cookie.remove(constants.authCookieName);
         state.loginLoading = false;
         state.loginError = error;
