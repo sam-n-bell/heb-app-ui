@@ -30,6 +30,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    "~/plugins/axios"
   ],
   /*
   ** Nuxt.js dev-modules
@@ -51,6 +52,13 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+    proxy: true
+  },
+
+  proxy: {
+    '/search-api/': {
+      target: `${process.env.PROXY_URL}`
+    }
   },
   /*
   ** vuetify module configuration
@@ -59,7 +67,7 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         dark: {
           primary: colors.blue.darken2,
