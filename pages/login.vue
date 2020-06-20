@@ -4,7 +4,7 @@
       <v-text-field v-model="password" label="Password" :rules="passwordRules" required></v-text-field>
       <v-btn @click="loginEvent()">Let me in</v-btn>
   </v-form>-->
-  <v-card class>
+  <v-card>
     <v-row class="mx-8">
       <v-col :cols="12">
         <v-card-title class="justify-center">Login to Search</v-card-title>
