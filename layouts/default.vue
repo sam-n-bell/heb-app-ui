@@ -14,6 +14,13 @@
     </v-main>
     <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
       <v-list>
+       <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="title align-center justify-center mx-auto">
+            <span style="font-family: Arial;">HI {{first_name | uppercase}}</span>
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
         <v-list-item @click="logout()">
           <v-list-item-action>
             <v-icon light>mdi-logout</v-icon>
@@ -48,6 +55,11 @@ export default {
       rightDrawer: false,
       title: "DISCOVERY"
     };
+  },
+  computed: {
+    first_name () {
+      return this.$store.state.authentication.user;
+    }
   },
   methods: {
     logoutEvent() {

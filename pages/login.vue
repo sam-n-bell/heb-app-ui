@@ -1,13 +1,8 @@
 <template>
-  <!-- <v-form ref="form" v-model="valid" lazy-validation>
-      <v-text-field v-model="email" label="Email" :rules="emailRules" required></v-text-field>
-      <v-text-field v-model="password" label="Password" :rules="passwordRules" required></v-text-field>
-      <v-btn @click="loginEvent()">Let me in</v-btn>
-  </v-form>-->
   <v-card>
     <v-row class="mx-8">
       <v-col :cols="12">
-        <v-card-title class="justify-center">Login to Search</v-card-title>
+        <v-card-title class="justify-center">Discovery Login</v-card-title>
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field v-model="email" label="Email" :rules="emailRules" required></v-text-field>
           <v-text-field 

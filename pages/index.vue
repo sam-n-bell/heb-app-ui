@@ -17,7 +17,8 @@
                     <td>${{props.item.sell_price | moneyPrecision}}</td>
                     <td>${{props.item.cost_expense | moneyPrecision}}</td>
                     <td>{{props.item.last_sold}}</td>
-                    <td>{{props.item.shelf_life_days}} days</td>
+                    <td v-if="props.item.shelf_life_days > 1">{{props.item.shelf_life_days}} days</td>
+                    <td v-else>{{props.item.shelf_life_days}} day</td>
                     <td>{{props.item.qty_sold_in}}</td>
                     <td>{{props.item.unit}}</td>
                   </tr>
