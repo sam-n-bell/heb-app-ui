@@ -36,6 +36,9 @@ const actions = {
             }
         }
     },
+    async logout({commit}) {
+        commit("logout")
+    },
     async register({commit}, credentials) {
         commit("register")
         try {
@@ -94,6 +97,7 @@ const mutations = {
         state.loginError = null;
         state.user = null;
         state.jwt = null;
+        this.$router.push(constants.uiUrls.login);
     }
 }
 

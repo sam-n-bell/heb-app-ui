@@ -15,6 +15,11 @@
                     <td>{{props.item.description | capitalizeEachWord}}</td>
                     <td>{{props.item.department | capitalize}}</td>
                     <td>${{props.item.sell_price | moneyPrecision}}</td>
+                    <td>${{props.item.cost_expense | moneyPrecision}}</td>
+                    <td>{{props.item.last_sold}}</td>
+                    <td>{{props.item.shelf_life_days}} days</td>
+                    <td>{{props.item.qty_sold_in}}</td>
+                    <td>{{props.item.unit}}</td>
                   </tr>
               </template>
             </v-data-table>
@@ -42,7 +47,12 @@ export default {
           { text: 'ID', value: 'product_id' },
           { text: 'Description', value: 'description' },
           { text: 'Department', value: 'department' },
-          { text: 'Sell Price', value: 'sell_price' }
+          { text: 'Sell Price', value: 'sell_price' },
+          { text: 'Cost Expense', value: 'cost_expense' },
+          { text: 'Last Sold', value: 'last_sold' },
+          { text: 'Shelf Life', value: 'shelf_life_days' },
+          { text: 'xFor', value: 'qty_sold_in' },
+          { text: 'Sold By', value: 'unit' }
         ],
     };
   },

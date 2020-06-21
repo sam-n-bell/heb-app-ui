@@ -1,16 +1,9 @@
 <template>
   <v-app dark>
-    <v-app-bar
-      :clipped-left="clipped"
-      fixed
-      app
-    >
+    <v-app-bar :clipped-left="clipped" fixed app>
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
-      >
+      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>mdi-menu</v-icon>
       </v-btn>
     </v-app-bar>
@@ -19,43 +12,33 @@
         <nuxt />
       </v-container>
     </v-main>
-    <v-navigation-drawer
-      v-model="rightDrawer"
-      :right="right"
-      temporary
-      fixed
-    >
+    <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
       <v-list>
-        <v-list-item @click="logoutEvent()">
+        <v-list-item @click="logout()">
           <v-list-item-action>
-            <v-icon light>
-              mdi-logout
-            </v-icon>
+            <v-icon light>mdi-logout</v-icon>
           </v-list-item-action>
           <v-list-item-title>Logout</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-footer
-      :fixed="fixed"
-      app
-    >
+    <v-footer :fixed="fixed" app>
       <span>H-E-B Interview Challenge Application, by Sam Bell</span>
     </v-footer>
-    <SnackBar/>
+    <SnackBar />
   </v-app>
 </template>
 
 <script>
-import SnackBar from '../components/SnackBar.vue';
-import {mapActions} from "vuex";
+import SnackBar from "../components/SnackBar.vue";
+import { mapActions } from "vuex";
 
 export default {
   middleware: "authenticate",
   components: {
     SnackBar
   },
-  data () {
+  data() {
     return {
       clipped: false,
       drawer: false,
@@ -63,21 +46,22 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
-    }
+      title: "DISCOVERY"
+    };
   },
   methods: {
-    logoutEvent () {
-      console.log("let me out")
+    logoutEvent() {
+      console.log("let me out");
     },
-  ...mapActions({
+    ...mapActions({
       getDepartments: "departments/getDepartments",
-      getUnits: "units/getUnits"
-  }),
+      getUnits: "units/getUnits",
+      logout: "authentication/logout"
+    })
   },
-  mounted () {
-    this.getDepartments()
-    this.getUnits()
+  mounted() {
+    this.getDepartments();
+    this.getUnits();
   }
-}
+};
 </script>
