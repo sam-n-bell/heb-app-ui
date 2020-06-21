@@ -6,18 +6,18 @@
           <v-expansion-panel-header>Filter by Product ID</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row>
-              <v-col cols="3">
+              <v-col cols="6">
                 <v-subheader>Product ID or Description</v-subheader>
               </v-col>
-              <v-col cols="4">
+              <v-col cols="6">
                 <v-text-field v-model="filters.productId" label="Product ID" prefix="#" clearable type="number"></v-text-field>
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="3">
+              <v-col cols="6">
                 <v-subheader>Description of Product</v-subheader>
               </v-col>
-              <v-col cols="4">
+              <v-col cols="6">
                 <v-text-field v-model="filters.description" label="Onion" clearable></v-text-field>
               </v-col>
             </v-row>
@@ -27,10 +27,10 @@
           <v-expansion-panel-header>Department or Unit/Measurement</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row>
-              <v-col cols="3">
+              <v-col cols="6">
                 <v-subheader>Department</v-subheader>
               </v-col>
-              <v-col cols="4">
+              <v-col cols="6">
                 <v-select
                   v-model="filters.department"
                   :items="departments.payload"
@@ -43,10 +43,10 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="3">
+              <v-col cols="6">
                 <v-subheader>Sold by Unit or Measurement</v-subheader>
               </v-col>
-              <v-col cols="4">
+              <v-col cols="6">
                 <v-select
                   v-model="filters.sellUnit"
                   :items="units.payload"
@@ -64,30 +64,34 @@
           <v-expansion-panel-header>Selling Price or Cost Expense</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row>
-              <v-col cols="3">
+              <v-col cols="6">
                 <v-subheader>Min. Selling Price</v-subheader>
               </v-col>
-              <v-col cols="3">
+              <v-col cols="6">
                 <v-text-field label="2.50" v-model="filters.minPrice" prefix="$" clearable type="number"></v-text-field>
               </v-col>
-              <v-col cols="3">
+             </v-row>
+            <v-row>
+              <v-col cols="6">
                 <v-subheader>Max. Selling Price</v-subheader>
               </v-col>
-              <v-col cols="3">
+              <v-col cols="6">
                 <v-text-field label="5.00" v-model="filters.maxPrice" prefix="$" clearable type="number"></v-text-field>
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="3">
+              <v-col cols="6">
                 <v-subheader>Min. Expense Cost</v-subheader>
               </v-col>
-              <v-col cols="3">
+              <v-col cols="6">
                 <v-text-field label="2.50" v-model="filters.minCost" prefix="$" clearable type="number"></v-text-field>
               </v-col>
-              <v-col cols="3">
+             </v-row>
+            <v-row>
+              <v-col cols="6">
                 <v-subheader>Max. Expense Cost</v-subheader>
               </v-col>
-              <v-col cols="3">
+              <v-col cols="6">
                 <v-text-field label="5.00" v-model="filters.maxCost" prefix="$" clearable type="number"></v-text-field>
               </v-col>
             </v-row>
@@ -97,7 +101,7 @@
           <v-expansion-panel-header>When Last Sold</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row>
-              <v-col cols="6">
+              <v-col cols="12">
                 <v-switch v-model="soldRange" label="Search by Range"></v-switch>
               </v-col>
             </v-row>
@@ -148,7 +152,7 @@
               </v-col>
             </v-row>
             <v-row v-else>
-              <v-col cols="6">
+              <v-col cols="12">
                 <v-menu
                   v-model="soldOnDateMenu"
                   :close-on-content-click="false"
@@ -177,29 +181,31 @@
           <v-expansion-panel-header>Shelf Life</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row>
-              <v-col cols="9">
+              <v-col cols="12">
                 <v-switch v-model="lifeRange" label="Search Shelf Life by Range"></v-switch>
               </v-col>
             </v-row>
             <v-row v-if="lifeRange">
-              <v-col cols="3">
+              <v-col cols="6">
                 <v-subheader>Min. Shelf Life</v-subheader>
               </v-col>
-              <v-col cols="3">
+              <v-col cols="6">
                 <v-text-field label="2" v-model="filters.minLife" clearable suffix="days" type="number"></v-text-field>
               </v-col>
-              <v-col cols="3">
+            </v-row>
+            <v-row v-if="lifeRange">
+              <v-col cols="6">
                 <v-subheader>Max. Shelf Life</v-subheader>
               </v-col>
-              <v-col cols="3">
+              <v-col cols="6">
                 <v-text-field label="7" v-model="filters.maxLife" clearable suffix="days" type="number"></v-text-field>
               </v-col>
             </v-row>
-            <v-row v-else>
-              <v-col cols="3">
+            <v-row v-if="!lifeRange">
+              <v-col cols="6">
                 <v-subheader>Exact Shelf Life</v-subheader>
               </v-col>
-              <v-col cols="3">
+              <v-col cols="6">
                 <v-text-field label="5" v-model="filters.exactLife" suffix="days" clearable type="number"></v-text-field>
               </v-col>
             </v-row>
