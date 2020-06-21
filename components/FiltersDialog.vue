@@ -9,8 +9,8 @@
               <v-col cols="3">
                 <v-subheader>Product ID</v-subheader>
               </v-col>
-              <v-col cols="9">
-                <v-text-field v-model="filters.productId" label="Product IDs are Numeric"></v-text-field>
+              <v-col cols="4">
+                <v-text-field v-model="filters.productId" label="Product ID" prefix="#" clearable></v-text-field>
               </v-col>
             </v-row>
           </v-expansion-panel-content>
@@ -22,15 +22,15 @@
               <v-col cols="3">
                 <v-subheader>Description of Product</v-subheader>
               </v-col>
-              <v-col cols="9">
-                <v-text-field v-model="filters.description" label="Onion"></v-text-field>
+              <v-col cols="4">
+                <v-text-field v-model="filters.description" label="Onion" clearable></v-text-field>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="3">
                 <v-subheader>Department</v-subheader>
               </v-col>
-              <v-col cols="9">
+              <v-col cols="4">
                 <v-select
                   v-model="filters.department"
                   :items="departments.payload"
@@ -46,7 +46,36 @@
         </v-expansion-panel>
         <v-expansion-panel>
           <v-expansion-panel-header>Selling Price or Cost Expense</v-expansion-panel-header>
-          <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
+          <v-expansion-panel-content>
+            <v-row>
+              <v-col cols="3">
+                <v-subheader>Min. Selling Price</v-subheader>
+              </v-col>
+              <v-col cols="3">
+                <v-text-field label="2.50" v-model="filters.minPrice" prefix="$" clearable></v-text-field>
+              </v-col>
+              <v-col cols="3">
+                <v-subheader>Max. Selling Price</v-subheader>
+              </v-col>
+              <v-col cols="3">
+                <v-text-field label="5.00" v-model="filters.maxPrice" prefix="$" clearable></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="3">
+                <v-subheader>Min. Expense Cost</v-subheader>
+              </v-col>
+              <v-col cols="3">
+                <v-text-field label="2.50" v-model="filters.minCost" prefix="$" clearable></v-text-field>
+              </v-col>
+              <v-col cols="3">
+                <v-subheader>Max. Expense Cost</v-subheader>
+              </v-col>
+              <v-col cols="3">
+                <v-text-field label="5.00" v-model="filters.maxCost" prefix="$" clearable></v-text-field>
+              </v-col>
+            </v-row>
+          </v-expansion-panel-content>
         </v-expansion-panel>
         <v-expansion-panel>
           <v-expansion-panel-header>When Last Sold</v-expansion-panel-header>
@@ -77,6 +106,7 @@
                   </template>
                   <v-date-picker v-model="filters.fromDate" @input="fromDateMenu = false"></v-date-picker>
                 </v-menu>
+                <v-btn text small @click="filters.fromDate = null">Clear From Date</v-btn>
               </v-col>
               <v-col cols="6">
                 <v-menu
@@ -98,6 +128,7 @@
                   </template>
                   <v-date-picker v-model="filters.toDate" @input="toDateMenu = false"></v-date-picker>
                 </v-menu>
+                <v-btn text small @click="filters.toDate = null">Clear To Date</v-btn>
               </v-col>
             </v-row>
             <v-row v-else>
@@ -121,13 +152,37 @@
                   </template>
                   <v-date-picker v-model="filters.soldOn" @input="soldOnDateMenu = false"></v-date-picker>
                 </v-menu>
+                <v-btn text small @click="filters.soldOn = null">Clear Date</v-btn>
               </v-col>
             </v-row>
           </v-expansion-panel-content>
         </v-expansion-panel>
         <v-expansion-panel>
-          <v-expansion-panel-header>Miscellaneous</v-expansion-panel-header>
-          <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
+          <v-expansion-panel-header>Shelf Life or Unit Sold By</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-row v-if="lifeRange">
+              <v-col cols="3">
+                <v-subheader>Min. Shelf Life</v-subheader>
+              </v-col>
+              <v-col cols="3">
+                <v-text-field label="2" v-model="filters.minPrice" clearable suffix="days"></v-text-field>
+              </v-col>
+                            <v-col cols="3">
+                <v-subheader>Max. Shelf Life</v-subheader>
+              </v-col>
+              <v-col cols="3">
+                <v-text-field label="7" v-model="filters.maxPrice" clearable suffix="days"></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row v-else>
+              <v-col cols="3">
+                <v-subheader>Exact Shelf Life</v-subheader>
+              </v-col>
+              <v-col cols="3">
+                <v-text-field label="5" v-model="filters.exactLife" suffix="days" clearable></v-text-field>
+              </v-col>
+            </v-row>
+          </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
       <v-card-actions>
@@ -201,15 +256,15 @@ export default {
     }
   },
   watch: {
-    soldRange (value) {
+    soldRange(value) {
       if (value) {
-        this.filters.soldOn = null
-        this.soldOnDateMenu = false
+        this.filters.soldOn = null;
+        this.soldOnDateMenu = false;
       } else {
-        this.filters.fromDate = null
-        this.filters.toDate = null
-        this.fromDateMenu = false
-        this.toDateMenu = false
+        this.filters.fromDate = null;
+        this.filters.toDate = null;
+        this.fromDateMenu = false;
+        this.toDateMenu = false;
       }
     }
   },
