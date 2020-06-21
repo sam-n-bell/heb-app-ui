@@ -7,17 +7,12 @@
           <v-expansion-panel-content>
             <v-row>
               <v-col cols="3">
-                <v-subheader>Product ID</v-subheader>
+                <v-subheader>Product ID or Description</v-subheader>
               </v-col>
               <v-col cols="4">
-                <v-text-field v-model="filters.productId" label="Product ID" prefix="#" clearable></v-text-field>
+                <v-text-field v-model="filters.productId" label="Product ID" prefix="#" clearable type="number"></v-text-field>
               </v-col>
             </v-row>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-        <v-expansion-panel>
-          <v-expansion-panel-header>Product Description or Department</v-expansion-panel-header>
-          <v-expansion-panel-content>
             <v-row>
               <v-col cols="3">
                 <v-subheader>Description of Product</v-subheader>
@@ -26,6 +21,11 @@
                 <v-text-field v-model="filters.description" label="Onion" clearable></v-text-field>
               </v-col>
             </v-row>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+        <v-expansion-panel>
+          <v-expansion-panel-header>Department or Unit/Measurement</v-expansion-panel-header>
+          <v-expansion-panel-content>
             <v-row>
               <v-col cols="3">
                 <v-subheader>Department</v-subheader>
@@ -42,6 +42,22 @@
                 </v-select>
               </v-col>
             </v-row>
+            <v-row>
+              <v-col cols="3">
+                <v-subheader>Sold by Unit/Measurement</v-subheader>
+              </v-col>
+              <v-col cols="4">
+                <v-select
+                  v-model="filters.sellUnit"
+                  :items="units.payload"
+                  item-text="name"
+                  clearable
+                  label="Unit"
+                >
+                  <template slot="item" slot-scope="{ item }">{{ item.name | capitalize}}</template>
+                </v-select>
+              </v-col>
+            </v-row>
           </v-expansion-panel-content>
         </v-expansion-panel>
         <v-expansion-panel>
@@ -52,13 +68,13 @@
                 <v-subheader>Min. Selling Price</v-subheader>
               </v-col>
               <v-col cols="3">
-                <v-text-field label="2.50" v-model="filters.minPrice" prefix="$" clearable></v-text-field>
+                <v-text-field label="2.50" v-model="filters.minPrice" prefix="$" clearable type="number"></v-text-field>
               </v-col>
               <v-col cols="3">
                 <v-subheader>Max. Selling Price</v-subheader>
               </v-col>
               <v-col cols="3">
-                <v-text-field label="5.00" v-model="filters.maxPrice" prefix="$" clearable></v-text-field>
+                <v-text-field label="5.00" v-model="filters.maxPrice" prefix="$" clearable type="number"></v-text-field>
               </v-col>
             </v-row>
             <v-row>
@@ -66,13 +82,13 @@
                 <v-subheader>Min. Expense Cost</v-subheader>
               </v-col>
               <v-col cols="3">
-                <v-text-field label="2.50" v-model="filters.minCost" prefix="$" clearable></v-text-field>
+                <v-text-field label="2.50" v-model="filters.minCost" prefix="$" clearable type="number"></v-text-field>
               </v-col>
               <v-col cols="3">
                 <v-subheader>Max. Expense Cost</v-subheader>
               </v-col>
               <v-col cols="3">
-                <v-text-field label="5.00" v-model="filters.maxCost" prefix="$" clearable></v-text-field>
+                <v-text-field label="5.00" v-model="filters.maxCost" prefix="$" clearable type="number"></v-text-field>
               </v-col>
             </v-row>
           </v-expansion-panel-content>
@@ -104,9 +120,9 @@
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker v-model="filters.fromDate" @input="fromDateMenu = false"></v-date-picker>
+                  <v-date-picker v-model="filters.soldFrom" @input="fromDateMenu = false"></v-date-picker>
                 </v-menu>
-                <v-btn text small @click="filters.fromDate = null">Clear From Date</v-btn>
+                <v-btn text small @click="filters.soldFrom = null">Clear From Date</v-btn>
               </v-col>
               <v-col cols="6">
                 <v-menu
@@ -126,9 +142,9 @@
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker v-model="filters.toDate" @input="toDateMenu = false"></v-date-picker>
+                  <v-date-picker v-model="filters.soldTo" @input="toDateMenu = false"></v-date-picker>
                 </v-menu>
-                <v-btn text small @click="filters.toDate = null">Clear To Date</v-btn>
+                <v-btn text small @click="filters.soldTo = null">Clear To Date</v-btn>
               </v-col>
             </v-row>
             <v-row v-else>
@@ -158,20 +174,25 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
         <v-expansion-panel>
-          <v-expansion-panel-header>Shelf Life or Unit Sold By</v-expansion-panel-header>
+          <v-expansion-panel-header>Shelf Life</v-expansion-panel-header>
           <v-expansion-panel-content>
+            <v-row>
+              <v-col cols="9">
+                <v-switch v-model="lifeRange" label="Search Shelf Life by Range"></v-switch>
+              </v-col>
+            </v-row>
             <v-row v-if="lifeRange">
               <v-col cols="3">
                 <v-subheader>Min. Shelf Life</v-subheader>
               </v-col>
               <v-col cols="3">
-                <v-text-field label="2" v-model="filters.minPrice" clearable suffix="days"></v-text-field>
+                <v-text-field label="2" v-model="filters.minLife" clearable suffix="days" type="number"></v-text-field>
               </v-col>
-                            <v-col cols="3">
+              <v-col cols="3">
                 <v-subheader>Max. Shelf Life</v-subheader>
               </v-col>
               <v-col cols="3">
-                <v-text-field label="7" v-model="filters.maxPrice" clearable suffix="days"></v-text-field>
+                <v-text-field label="7" v-model="filters.maxLife" clearable suffix="days" type="number"></v-text-field>
               </v-col>
             </v-row>
             <v-row v-else>
@@ -179,7 +200,7 @@
                 <v-subheader>Exact Shelf Life</v-subheader>
               </v-col>
               <v-col cols="3">
-                <v-text-field label="5" v-model="filters.exactLife" suffix="days" clearable></v-text-field>
+                <v-text-field label="5" v-model="filters.exactLife" suffix="days" clearable type="number"></v-text-field>
               </v-col>
             </v-row>
           </v-expansion-panel-content>
@@ -238,10 +259,10 @@ export default {
   },
   computed: {
     formattedFromDate() {
-      return this.formatDate(this.filters.fromDate);
+      return this.formatDate(this.filters.soldFrom);
     },
     formattedToDate() {
-      return this.formatDate(this.filters.toDate);
+      return this.formatDate(this.filters.soldTo);
     },
     formattedSoldOnDate() {
       return this.formatDate(this.filters.soldOn);
@@ -253,6 +274,9 @@ export default {
     },
     departments() {
       return this.$store.state.departments.departments;
+    },
+    units() {
+      return this.$store.state.units.units;
     }
   },
   watch: {
@@ -261,10 +285,18 @@ export default {
         this.filters.soldOn = null;
         this.soldOnDateMenu = false;
       } else {
-        this.filters.fromDate = null;
-        this.filters.toDate = null;
+        this.filters.soldFrom = null;
+        this.filters.soldTo = null;
         this.fromDateMenu = false;
         this.toDateMenu = false;
+      }
+    },
+    lifeRange(value) {
+      if (value) {
+        this.filters.exactLife = null;
+      } else {
+        this.filters.minLife = null;
+        this.filters.maxLife = null;
       }
     }
   },

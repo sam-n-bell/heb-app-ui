@@ -123,11 +123,13 @@ export default {
   },
   methods: {
   ...mapActions({
-      getDepartments: "departments/getDepartments"
+      getDepartments: "departments/getDepartments",
+      getUnits: "units/getUnits"
   }),
   },
   mounted () {
     this.getDepartments()
+    this.getUnits()
   }
 }
 </script>
