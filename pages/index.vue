@@ -8,7 +8,16 @@
       </v-card-title>
       <v-row>
         <v-col cols="12">
-            <v-data-table :headers="headers" :items="products.payload.products"  class="elevation-1"></v-data-table>
+            <v-data-table :headers="headers" :items="products.payload.products">
+              <template slot="item" slot-scope="props">
+                  <tr>
+                    <td>{{props.item.product_id}}</td>
+                    <td>{{props.item.description | capitalizeEachWord}}</td>
+                    <td>{{props.item.department | capitalize}}</td>
+                    <td>${{props.item.sell_price | moneyPrecision}}</td>
+                  </tr>
+              </template>
+            </v-data-table>
         </v-col>
       </v-row>
     </v-card>
