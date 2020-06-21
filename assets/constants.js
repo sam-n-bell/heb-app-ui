@@ -3,7 +3,9 @@ let authCookieName = "SEARCH-AUTH-TOKEN"
 let apiUrls = Object.freeze({
     login: `${baseURL}login`,
     register: `${baseURL}register`,
-    products: `${baseURL}products`
+    products: `${baseURL}products`,
+    departments: `${baseURL}departments`,
+    units: `${baseURL}units`
 })
 let uiUrls = Object.freeze({
     register: '/register',

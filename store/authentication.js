@@ -76,7 +76,7 @@ const mutations = {
         state.loginError = null;
     },
     saveJWT(state, jwt) {
-        Cookie.set(constants.authCookieName, jwt, {expires: 1, path: ''});
+        Cookie.set(constants.authCookieName, jwt, {expires: 0.5, path: ''});
         state.jwt = jwt
         let decoded = jsonwebtoken.decode(jwt)
         state.user = decoded.identity.first_name;

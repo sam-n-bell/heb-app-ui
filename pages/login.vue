@@ -10,8 +10,15 @@
         <v-card-title class="justify-center">Login to Search</v-card-title>
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field v-model="email" label="Email" :rules="emailRules" required></v-text-field>
-          <v-text-field v-model="password" label="Password" :rules="passwordRules" required></v-text-field>
-          <v-btn @click="loginEvent()" class="full-width" :loading="loginLoading">Let me in {{isAuthenticated}}</v-btn>
+          <v-text-field 
+            v-model="password" 
+            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            label="Password" 
+            :type="showPassword ? 'text' : 'password'"         
+            :rules="passwordRules" 
+            @click:append="showPassword = !showPassword" 
+            required></v-text-field>
+          <v-btn @click="loginEvent()" class="full-width" :loading="loginLoading">Let me in</v-btn>
           <v-divider/>
           <p  @click="pushToRegister()" class="text-center mt-3"><a>Don't have an account?</a></p>
         </v-form>
@@ -23,6 +30,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import constants from "../assets/constants";
+import _ from "lodash";
 
 export default {
   components: {},
@@ -36,12 +44,16 @@ export default {
       ],
       password: "",
       passwordRules: [v => !!v || "Password is required"],
-      valid: true
+      valid: true,
+      showPassword: false
     };
   },
   computed: {
     loginLoading() {
       return this.$store.state.authentication.loginLoading;
+    },
+    loginError () {
+      return this.$store.state.authentication.loginError;
     },
     ...mapGetters({
       isAuthenticated: "authentication/isAuthenticated"
@@ -57,7 +69,8 @@ export default {
       this.$router.push(constants.uiUrls.register);
     },
     ...mapActions({
-      login: "authentication/login"
+      login: "authentication/login",
+      showSnackBar: "notifications/showSnackBar"
     })
   },
   mounted() {
@@ -69,6 +82,14 @@ export default {
     isAuthenticated(newValue, oldValue) {
       if (newValue) {
         this.$router.push(constants.uiUrls.home);
+      }
+    },
+    loginError (value) {
+      if (value) {
+        this.showSnackBar({
+          text: value,
+          color: 'error'
+        })
       }
     }
   }

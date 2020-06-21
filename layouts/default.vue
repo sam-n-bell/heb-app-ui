@@ -85,11 +85,17 @@
     >
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
+    <SnackBar/>
   </v-app>
 </template>
 
 <script>
+import SnackBar from '../components/SnackBar.vue';
+
 export default {
+  components: {
+    SnackBar
+  },
   data () {
     return {
       clipped: false,
