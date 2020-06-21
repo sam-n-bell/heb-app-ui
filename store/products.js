@@ -11,7 +11,7 @@ const state = () => ({
     filtersDialog: {
         visible: false,
         filters: {
-            id: null,
+            productId: null,
             description: null,
             soldFrom: null,
             soldTo: null,

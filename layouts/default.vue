@@ -91,8 +91,10 @@
 
 <script>
 import SnackBar from '../components/SnackBar.vue';
+import {mapActions} from "vuex";
 
 export default {
+  middleware: "authenticate",
   components: {
     SnackBar
   },
@@ -118,6 +120,14 @@ export default {
       rightDrawer: false,
       title: 'Vuetify.js'
     }
+  },
+  methods: {
+  ...mapActions({
+      getDepartments: "departments/getDepartments"
+  }),
+  },
+  mounted () {
+    this.getDepartments()
   }
 }
 </script>

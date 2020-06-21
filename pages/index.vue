@@ -54,7 +54,8 @@ export default {
     ...mapActions({
         showFiltersDialog: "products/showFiltersDialog",
     })
+  },
+  mounted () {
   }
-  // middleware: "authenticate"
 }
 </script>
