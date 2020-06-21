@@ -1,40 +1,26 @@
 <template>
-  <!-- <v-layout
-    column
-    justify-center
-    align-center
-  >
-    <v-flex
-      xs12
-      sm8
-      md6
-    >
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-      </v-card>
-    </v-flex>
-  </v-layout> -->
   <v-container>
     <v-card>
+      <v-card-title>
+        <v-row>
+        <v-spacer/><v-btn @click="showFiltersDialog()" text>Show Filters</v-btn>
+      </v-row>
+      </v-card-title>
       <v-row>
-        <v-btn @click="showFiltersDialog()" width="100%">Show Filters</v-btn>
+        <v-col cols="12">
+            <v-data-table :headers="headers" :items="products.payload.products"  class="elevation-1"></v-data-table>
+        </v-col>
       </v-row>
     </v-card>
-    <FiltersDialog/>
+    <FiltersDialog />
   </v-container>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
+import Logo from "~/components/Logo.vue";
+import VuetifyLogo from "~/components/VuetifyLogo.vue";
 import { mapActions, mapGetters } from "vuex";
-import FiltersDialog from "~/components/FiltersDialog.vue"
+import FiltersDialog from "~/components/FiltersDialog.vue";
 export default {
   components: {
     Logo,
@@ -43,19 +29,30 @@ export default {
   },
   data: () => {
     return {
-      products: [
-
-      ]
+      headers: [
+          { text: 'ID', value: 'product_id' },
+          { text: 'Description', value: 'description' },
+          { text: 'Department', value: 'department' },
+          { text: 'Sell Price', value: 'sell_price' }
+        ],
     };
   },
   computed: {
+    products () {
+      return this.$store.state.products.products;
+    },
+    filters () {
+      return this.$store.state.products.filtersDialog.filters;
+    },
   },
   methods: {
     ...mapActions({
-        showFiltersDialog: "products/showFiltersDialog",
+      showFiltersDialog: "products/showFiltersDialog",
+      getProducts: "products/getProducts"
     })
   },
-  mounted () {
+  mounted() {
+    this.getProducts(this.filters);
   }
-}
+};
 </script>

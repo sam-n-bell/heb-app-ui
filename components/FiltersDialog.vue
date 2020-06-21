@@ -321,6 +321,7 @@ export default {
     },
     saveFiltersEvent() {
       this.saveFilters(this.filters);
+      this.getProducts(this.filters)
     },
     clearFiltersEvent () {
       this.clearFilters()
@@ -334,7 +335,8 @@ export default {
       saveFilters: "products/saveFilters",
       clearFilters: "products/clearFilters",
       hideFiltersDialog: "products/hideFiltersDialog",
-      showFiltersDialog: "products/showFiltersDialog"
+      showFiltersDialog: "products/showFiltersDialog",
+      getProducts: "products/getProducts"
     })
   }
 };
