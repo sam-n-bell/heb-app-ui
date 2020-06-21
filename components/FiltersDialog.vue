@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="filtersDialog.visible" persistent max-width="800">
+  <v-dialog v-model="filtersDialog.visible" persistent max-width="700">
     <v-card>
       <v-expansion-panels>
         <v-expansion-panel>
@@ -44,7 +44,7 @@
             </v-row>
             <v-row>
               <v-col cols="3">
-                <v-subheader>Sold by Unit/Measurement</v-subheader>
+                <v-subheader>Sold by Unit or Measurement</v-subheader>
               </v-col>
               <v-col cols="4">
                 <v-select
@@ -52,7 +52,7 @@
                   :items="units.payload"
                   item-text="name"
                   clearable
-                  label="Unit"
+                  label="Units and Measurements"
                 >
                   <template slot="item" slot-scope="{ item }">{{ item.name | capitalize}}</template>
                 </v-select>
@@ -207,14 +207,14 @@
         </v-expansion-panel>
       </v-expansion-panels>
       <v-card-actions>
-        <v-btn color="default" text class="action-button mt-2" @click="saveFilters()">Apply</v-btn>
+        <v-btn color="default" text class="action-button mt-2" @click="saveFiltersEvent()">Apply</v-btn>
         <v-spacer></v-spacer>
         <v-btn
           color="primary"
           text
           style="float: right;"
           class="action-button mt-2"
-          @click="clearFilters()"
+          @click="clearFiltersEvent()"
         >Clear</v-btn>
         <v-btn
           color="error"
@@ -225,7 +225,6 @@
         >Cancel</v-btn>
       </v-card-actions>
     </v-card>
-    <pre>{{filters}}</pre>
   </v-dialog>
 </template>
 
@@ -298,6 +297,14 @@ export default {
         this.filters.minLife = null;
         this.filters.maxLife = null;
       }
+    },
+    filtersDialog: {
+      deep: true,
+      handler(object) {
+        if (JSON.stringify(object.filters) !== JSON.stringify(this.filters)) {
+          this.filters = _.cloneDeep(object.filters)
+        } 
+      }
     }
   },
   methods: {
@@ -306,8 +313,13 @@ export default {
       const [year, month, day] = date.split("-");
       return `${month}/${day}/${year}`;
     },
-    saveFilters() {
+    saveFiltersEvent() {
       this.saveFilters(this.filters);
+    },
+    clearFiltersEvent () {
+      this.clearFilters()
+      // written this way when filters are updated but not saved
+      this.filters = _.cloneDeep(this.filtersDialog.filters);
     },
     closeFilters() {
       this.hideFiltersDialog();
@@ -319,7 +331,6 @@ export default {
       showFiltersDialog: "products/showFiltersDialog"
     })
   }
-  // middleware: "authenticate"
 };
 </script>
 

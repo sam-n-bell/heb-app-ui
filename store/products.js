@@ -36,7 +36,7 @@ const getters = {
 
 const actions = {
     async getProducts({commit}, params) {
-        commit("getProducts")
+        commit("getProducts");
         try {
             let query = '?'
             if (params.product_id) {
@@ -49,39 +49,39 @@ const actions = {
             commit("getProductsSuccess", products);
         } catch (error) {
             if (error.response && error.response.data.message) {
-                commit("getProductsFailure", error.response.data.message)
+                commit("getProductsFailure", error.response.data.message);
             } else {
-                commit("getProductsFailure", error.message)
+                commit("getProductsFailure", error.message);
             }
         }
     },
     async showFiltersDialog({commit}) {
         try {
-            console.log("showing filters dialog")
-            commit("showFiltersDialog")
+            commit("showFiltersDialog");
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     },
     async hideFiltersDialog({commit}) {
         try {
-            commit("hideFiltersDialog")
+            commit("hideFiltersDialog");
         } catch (error) {
             console.log(error)
         }
     },
-    async saveFilters({commit}, filters) {
+    async saveFilters({commit, dispatch}, filters) {
         try {
-            commit("saveFilters", filters)
+            commit("saveFilters", filters);
+            dispatch("hideFiltersDialog");
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     },
     async clearFilters({commit}) {
         try {
-            commit("clearFilters")
+            commit("clearFilters");
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     }
 }
@@ -94,12 +94,23 @@ const mutations = {
         state.filtersDialog.visible = false;
     },
     saveFilters(state, filters) {
+        const keys = Object.keys(filters);
+        // convert empty strings and undefineds to null
+        keys.forEach( (key) => {
+            if (typeof filters[key] === 'string' && filters[key].toString().trim() === "") {
+                filters[key] = null;
+            }
+            if (typeof filters[key] === 'undefined') {
+                filters[key] = null;
+            }
+        })
         state.filtersDialog.filters = filters;
     },
     clearFilters(state) {
-        Object.values(state.filtersDialog.filters).forEach((key, index) => {
-            state.filtersDialog.filters[key] = null
-        });
+        const keys = Object.keys(state.filtersDialog.filters);
+        keys.forEach( (key) => {
+            state.filtersDialog.filters[key] = null;
+        })
     },
     getProducts(state) {
         state.products.loading = true;
