@@ -1,6 +1,6 @@
 <template>
   <v-app dark>
-    <v-app-bar :clipped-left="clipped" fixed app>
+    <v-app-bar :clipped-left="clipped" fixed app color="primary">
       <v-toolbar-title v-text="title" />
       <v-spacer />
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
@@ -29,8 +29,10 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-footer :fixed="fixed" app>
-      <span>H-E-B Interview Challenge Application, by Sam Bell</span>
+    <v-footer :fixed="fixed" app color="secondary">
+        <v-col class="grey--text text--lighten-1 pt-0 text-center pb-0">
+          DISCOVERY | H-E-B Interview Challenge
+        </v-col>
     </v-footer>
     <SnackBar />
   </v-app>

@@ -50,6 +50,15 @@ export default {
     loginError () {
       return this.$store.state.authentication.loginError;
     },
+    jwt () {
+      return this.$store.state.authentication.jwt;
+    },
+    user () {
+      return this.$store.state.authentication.user;
+    },
+    authenticated () {
+      return !!this.jwt || !!this.user
+    },
     ...mapGetters({
       isAuthenticated: "authentication/isAuthenticated"
     })
@@ -74,8 +83,8 @@ export default {
     }
   },
   watch: {
-    isAuthenticated(newValue, oldValue) {
-      if (newValue) {
+    authenticated (value) {
+      if (value) {
         this.$router.push(constants.uiUrls.home);
       }
     },
