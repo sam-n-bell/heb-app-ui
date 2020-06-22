@@ -1,5 +1,5 @@
-let baseURL = "/search-api/"
-let authCookieName = "SEARCH-AUTH-TOKEN"
+let baseURL = "/discovery-api/"
+let authCookieName = "DISCOVERY-AUTH-TOKEN"
 let apiUrls = Object.freeze({
     login: `${baseURL}login`,
     register: `${baseURL}register`,
