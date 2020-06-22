@@ -56,7 +56,7 @@ export default {
   },
 
   proxy: {
-    '/search-api/': {
+    '/discovery-api/': {
       target: `${process.env.PROXY_URL}`
     }
   },
