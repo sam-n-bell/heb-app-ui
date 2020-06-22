@@ -57,6 +57,11 @@ export default {
           { text: 'xFor', value: 'qty_sold_in' },
           { text: 'Sold By', value: 'unit' }
         ],
+       headersSelected: [
+
+       ]
+       // model it to headersselected
+       // items it to headers
     };
   },
   computed: {
