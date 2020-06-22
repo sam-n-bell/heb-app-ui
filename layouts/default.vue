@@ -1,7 +1,7 @@
 <template>
   <v-app dark>
     <v-app-bar :clipped-left="clipped" fixed app color="primary">
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title v-text="title" class="text-xs-center text-sm-center"/>
       <v-spacer />
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>mdi-menu</v-icon>
@@ -64,9 +64,6 @@ export default {
     }
   },
   methods: {
-    logoutEvent() {
-      console.log("let me out");
-    },
     ...mapActions({
       getDepartments: "departments/getDepartments",
       getUnits: "units/getUnits",

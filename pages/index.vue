@@ -3,8 +3,10 @@
     <v-card>
       <v-card-title>
         <v-row>
-        <v-spacer/><v-btn @click="showFiltersDialog()" text>Show Filters</v-btn>
-      </v-row>
+          <v-spacer/>
+            <v-btn @click="showFiltersDialog()" text>Filter Columns</v-btn>
+            <v-btn @click="showFiltersDialog()" text>Show Filters</v-btn>
+        </v-row>
       </v-card-title>
       <v-row>
         <v-col cols="12">
