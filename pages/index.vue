@@ -70,16 +70,28 @@ export default {
       return this.$store.state.products.columnsDialog;
     }
   },
+  watch: {
+    products: {
+      deep: true,
+      handler(object) {
+        if (object.error) {
+           this.showSnackBar({
+          text: object.error,
+          color: 'error'
+        })
+        }
+      }
+    }
+  },
   methods: {
     columnsContainsField (fieldName) {
-      console.log('checking ' + fieldName)
-      console.log(!!this.columns.selectedColumns.find(x => x.value === fieldName))
         return _.includes(this.columns.selectedColumns, fieldName);
     },
     ...mapActions({
       showFiltersDialog: "products/showFiltersDialog",
       showColumnsDialog: "products/showColumnsDialog",
-      getProducts: "products/getProducts"
+      getProducts: "products/getProducts",
+      showSnackBar: "notifications/showSnackBar"
     })
   },
   mounted() {

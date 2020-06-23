@@ -7,7 +7,7 @@ export default function(context) {
         const code = parseInt(error.response && error.response.status);
         if (code === 401) {
             context.redirect("/login");
-        } else if (code > 401) {
+        } else if (code > 404) {
             context.redirect("/error")
         }
     });
