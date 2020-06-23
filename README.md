@@ -1,9 +1,18 @@
 # hebappui
 
 > For H-E-B interview
-> Please provide a PROXY_URL env variable if running locally.
-> Back-end service should have a path of /discovery-api/
-> Stores a cookie named DISCOVERY-AUTH-TOKEN
+
+# Info
+
+ ```bash
+ Please provide a PROXY_URL env variable if running locally
+ 
+ Back-end service (https://github.com/sam-n-bell/heb-app-api)
+ 
+ Stores a cookie named DISCOVERY-AUTH-TOKEN
+ 
+ Configured to run on Heroku
+ ```
 
 ## Build Setup
 
