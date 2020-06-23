@@ -3,14 +3,19 @@
     <v-card>
       <v-expansion-panels>
         <v-expansion-panel>
-          <v-expansion-panel-header>Filter by Product ID</v-expansion-panel-header>
+          <v-expansion-panel-header>Search by ID or Description</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row>
               <v-col cols="6">
-                <v-subheader>Product ID or Description</v-subheader>
+                <v-subheader>Product ID</v-subheader>
               </v-col>
               <v-col cols="6">
-                <v-text-field v-model="filters.productId" label="Product ID" prefix="#" clearable type="number"></v-text-field>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field v-bind="attrs" v-on="on" v-model="filters.productId" label="Product ID" prefix="#" clearable type="number"></v-text-field>
+                  </template>
+                  <span>Product ID override others filters</span>
+                </v-tooltip>
               </v-col>
             </v-row>
             <v-row>
@@ -39,6 +44,7 @@
                   label="Department"
                 >
                   <template slot="item" slot-scope="{ item }">{{ item.name | capitalize}}</template>
+                   <template slot="selection" slot-scope="{ item }">{{ item.name | capitalize}}</template>
                 </v-select>
               </v-col>
             </v-row>
@@ -55,6 +61,7 @@
                   label="Units and Measurements"
                 >
                   <template slot="item" slot-scope="{ item }">{{ item.name | capitalize}}</template>
+                  <template slot="selection" slot-scope="{ item }">{{ item.name | capitalize}}</template>
                 </v-select>
               </v-col>
             </v-row>
@@ -213,17 +220,17 @@
         </v-expansion-panel>
       </v-expansion-panels>
       <v-card-actions>
-        <v-btn color="default" text class="action-button mt-2" @click="saveFiltersEvent()">Apply</v-btn>
+        <v-btn color="primary" text class="action-button mt-2" @click="saveFiltersEvent()">Apply</v-btn>
         <v-spacer></v-spacer>
         <v-btn
-          color="primary"
+          color="secondary"
           text
           style="float: right;"
           class="action-button mt-2"
           @click="clearFiltersEvent()"
         >Clear</v-btn>
         <v-btn
-          color="error"
+          color="secondary"
           text
           style="float: right;"
           class="action-button mt-2"

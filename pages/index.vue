@@ -4,8 +4,8 @@
       <v-card-title>
         <v-row>
           <v-spacer/>
-            <v-btn @click="showColumnsDialog()" text>Filter Columns</v-btn>
-            <v-btn @click="showFiltersDialog()" text>Show Filters</v-btn>
+            <v-btn @click="showColumnsDialog()" text>Choose Columns</v-btn>
+            <v-btn @click="showFiltersDialog()" text>Filter Products</v-btn>
         </v-row>
       </v-card-title>
       <v-row>
