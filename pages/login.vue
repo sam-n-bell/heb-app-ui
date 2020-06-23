@@ -5,7 +5,7 @@
         <v-card>
           <v-row class="mx-8">
             <v-col :cols="12">
-              <v-card-title class="justify-center">Discovery Login</v-card-title>
+              <v-card-title class="justify-center">DISCOVERY Login</v-card-title>
               <v-form ref="form" v-model="valid" lazy-validation>
                 <v-text-field v-model="email" label="Email" :rules="emailRules" required></v-text-field>
                 <v-text-field
