@@ -1,28 +1,38 @@
 <template>
-  <v-card>
-    <v-row class="mx-8">
-      <v-col :cols="12">
-        <v-card-title class="justify-center">Discovery Login</v-card-title>
-        <v-form ref="form" v-model="valid" lazy-validation>
-          <v-text-field v-model="email" label="Email" :rules="emailRules" required></v-text-field>
-          <v-text-field
-            v-model="password"
-            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-            label="Password"
-            :type="showPassword ? 'text' : 'password'"
-            :rules="passwordRules"
-            @click:append="showPassword = !showPassword"
-            required
-          ></v-text-field>
-          <v-row class="mt-5">
-            <v-btn @click="loginEvent()" :loading="loginLoading" color="primary">Start Searching</v-btn>
-            <v-spacer />
-            <v-btn text color="secondary" @click="pushToRegister()">Register</v-btn>
+  <v-container fluid>
+    <v-row justify="center">
+      <v-col cols="12" xl="5" lg="5" sm="12" xs="12">
+        <v-card>
+          <v-row class="mx-8">
+            <v-col :cols="12">
+              <v-card-title class="justify-center">Discovery Login</v-card-title>
+              <v-form ref="form" v-model="valid" lazy-validation>
+                <v-text-field v-model="email" label="Email" :rules="emailRules" required></v-text-field>
+                <v-text-field
+                  v-model="password"
+                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                  label="Password"
+                  :type="showPassword ? 'text' : 'password'"
+                  :rules="passwordRules"
+                  @click:append="showPassword = !showPassword"
+                  required
+                ></v-text-field>
+                <v-row class="mt-5">
+                  <v-btn
+                    @click="loginEvent()"
+                    :loading="loginLoading"
+                    color="primary"
+                  >Start Searching</v-btn>
+                  <v-spacer />
+                  <v-btn text color="secondary" @click="pushToRegister()">Register</v-btn>
+                </v-row>
+              </v-form>
+            </v-col>
           </v-row>
-        </v-form>
+        </v-card>
       </v-col>
     </v-row>
-  </v-card>
+  </v-container>
 </template>
  
 <script>
