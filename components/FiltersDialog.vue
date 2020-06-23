@@ -235,15 +235,11 @@
 </template>
 
 <script>
-import Logo from "~/components/Logo.vue";
-import VuetifyLogo from "~/components/VuetifyLogo.vue";
 import { mapActions, mapGetters } from "vuex";
 import _ from "lodash";
 
 export default {
   components: {
-    Logo,
-    VuetifyLogo
   },
   data: () => {
     return {

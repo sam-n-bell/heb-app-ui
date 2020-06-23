@@ -16,7 +16,7 @@
       <v-list>
        <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="title align-center justify-center mx-auto">
+          <v-list-item-title class="title text-center">
             <span style="font-family: Arial;">HI {{first_name | uppercase}}</span>
           </v-list-item-title>
         </v-list-item-content>
@@ -31,7 +31,7 @@
     </v-navigation-drawer>
     <v-footer :fixed="fixed" app color="secondary">
         <v-col class="grey--text text--lighten-1 pt-0 text-center pb-0">
-          DISCOVERY | H-E-B Interview Challenge
+          DISCOVERY by Sam Bell
         </v-col>
     </v-footer>
     <SnackBar />

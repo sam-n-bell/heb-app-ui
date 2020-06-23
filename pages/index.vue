@@ -4,45 +4,40 @@
       <v-card-title>
         <v-row>
           <v-spacer/>
-            <v-btn @click="showFiltersDialog()" text>Filter Columns</v-btn>
+            <v-btn @click="showColumnsDialog()" text>Filter Columns</v-btn>
             <v-btn @click="showFiltersDialog()" text>Show Filters</v-btn>
         </v-row>
       </v-card-title>
       <v-row>
         <v-col cols="12">
-            <v-data-table :headers="headers" :items="products.payload.products">
-              <template slot="item" slot-scope="props">
-                  <tr>
-                    <td>{{props.item.product_id}}</td>
-                    <td>{{props.item.description | capitalizeEachWord}}</td>
-                    <td>{{props.item.department | capitalize}}</td>
-                    <td>${{props.item.sell_price | moneyPrecision}}</td>
-                    <td>${{props.item.cost_expense | moneyPrecision}}</td>
-                    <td>{{props.item.last_sold}}</td>
-                    <td v-if="props.item.shelf_life_days > 1">{{props.item.shelf_life_days}} days</td>
-                    <td v-else>{{props.item.shelf_life_days}} day</td>
-                    <td>{{props.item.qty_sold_in}}</td>
-                    <td>{{props.item.unit}}</td>
-                  </tr>
+            <v-data-table :headers="columns.selectedColumns" :items="products.payload.products">
+              <template v-slot:item.sell_price=" { item }">
+                ${{item.sell_price}}
+              </template>
+              <template v-slot:item.cost_expense=" { item }">
+                ${{item.cost_expense}}
+              </template>
+              <template v-slot:item.last_sold=" { item }">
+                {{ $moment(item.last_sold).format('M/D/YYYY')}}
               </template>
             </v-data-table>
         </v-col>
       </v-row>
     </v-card>
     <FiltersDialog />
+    <ColumnsDialog />
   </v-container>
 </template>
 
 <script>
-import Logo from "~/components/Logo.vue";
-import VuetifyLogo from "~/components/VuetifyLogo.vue";
 import { mapActions, mapGetters } from "vuex";
 import FiltersDialog from "~/components/FiltersDialog.vue";
+import ColumnsDialog from "~/components/ColumnsDialog.vue";
+import _ from "lodash";
 export default {
   components: {
-    Logo,
-    VuetifyLogo,
-    FiltersDialog
+    FiltersDialog,
+    ColumnsDialog
   },
   data: () => {
     return {
@@ -71,10 +66,19 @@ export default {
     filters () {
       return this.$store.state.products.filtersDialog.filters;
     },
+    columns () {
+      return this.$store.state.products.columnsDialog;
+    }
   },
   methods: {
+    columnsContainsField (fieldName) {
+      console.log('checking ' + fieldName)
+      console.log(!!this.columns.selectedColumns.find(x => x.value === fieldName))
+        return _.includes(this.columns.selectedColumns, fieldName);
+    },
     ...mapActions({
       showFiltersDialog: "products/showFiltersDialog",
+      showColumnsDialog: "products/showColumnsDialog",
       getProducts: "products/getProducts"
     })
   },

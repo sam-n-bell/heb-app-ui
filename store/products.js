@@ -27,6 +27,29 @@ const state = () => ({
             maxCost: null,
             soldInCounts: null 
         }
+    },
+    columnsDialog: {
+        visible: false,
+        allColumns: [
+            { text: 'Product ID', value: 'product_id' },
+            { text: 'Description', value: 'description' },
+            { text: 'Department', value: 'department' },
+            { text: 'Sell Price', value: 'sell_price' },
+            { text: 'Cost Expense', value: 'cost_expense' },
+            { text: 'Last Sold', value: 'last_sold' },
+            { text: 'Shelf Life (Days)', value: 'shelf_life_days' },
+            { text: 'xFor', value: 'qty_sold_in' },
+            { text: 'Sold By', value: 'unit' }
+        ],
+        selectedColumns: [
+            { text: 'Product ID', value: 'product_id' },
+            { text: 'Description', value: 'description' },
+            { text: 'Department', value: 'department' },
+            { text: 'Sell Price', value: 'sell_price' },
+            { text: 'Cost Expense', value: 'cost_expense' },
+            { text: 'Last Sold', value: 'last_sold' },
+            { text: 'Shelf Life (Days)', value: 'shelf_life_days' }
+        ]
     }
 })
 
@@ -36,7 +59,6 @@ const getters = {
 
 const actions = {
     async getProducts({commit}, params) {
-        console.log("get products")
         commit("getProducts");
         try {
             let query = '?'
@@ -87,7 +109,6 @@ const actions = {
                 }
             }
             let products = await this.$axios.get(`${constants.apiUrls.products}${query}`);
-            console.log(products);
             commit("getProductsSuccess", products.data);
         } catch (error) {
             if (error.response && error.response.data.message) {
@@ -125,6 +146,28 @@ const actions = {
         } catch (error) {
             console.log(error);
         }
+    },
+    async showColumnsDialog({commit}) {
+        try {
+            commit("showColumnsDialog");
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    async hideColumnsDialog({commit}) {
+        try {
+            commit("hideColumnsDialog");
+        } catch (error) {
+            console.log(error)
+        }
+    },
+    async saveColumns({commit, dispatch}, columns) {
+        try {
+            commit("saveColumns", columns);
+            dispatch("hideColumnsDialog");
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 
@@ -147,6 +190,15 @@ const mutations = {
             }
         })
         state.filtersDialog.filters = filters;
+    },
+    showColumnsDialog(state) {
+        state.columnsDialog.visible = true;
+    },
+    hideColumnsDialog(state) {
+        state.columnsDialog.visible = false;
+    },
+    saveColumns(state, columns) {
+        state.columnsDialog.selectedColumns = columns;
     },
     clearFilters(state) {
         const keys = Object.keys(state.filtersDialog.filters);
