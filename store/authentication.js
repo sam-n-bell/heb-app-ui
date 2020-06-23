@@ -57,16 +57,16 @@ const actions = {
 const mutations = {
     register(state) {
         state.registerLoading = true;
-        state.registerErrors = null;
+        state.registerError = null;
     },
     registerSuccess(state) {
         state.registerLoading = false;
-        state.registerErrors = null;
+        state.registerError = null;
         this.$router.push(constants.uiUrls.login);
     },
     registerFailure(state, error) {
         state.registerLoading = false;
-        state.registerErrors = error;
+        state.registerError = error;
     },
     login(state) {
         state.loginLoading = true;
