@@ -4,13 +4,14 @@
       <v-row class="mx-8">
         <v-col :cols="12">
           <v-form ref="form" v-model="valid" lazy-validation>
-            <v-text-field 
-            v-model="firstName"
-             label="First Name" 
-             :rules="firstNameRules" 
-                           counter
+            <v-text-field
+              v-model="firstName"
+              label="First Name"
+              :rules="firstNameRules"
+              counter
               maxlength="20"
-             required></v-text-field>
+              required
+            ></v-text-field>
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
@@ -26,28 +27,28 @@
             </v-tooltip>
             <v-text-field
               v-model="password"
+              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               label="Password"
+              :type="showPassword ? 'text' : 'password'"
               :rules="passwordRules"
               counter
-               @click:append="showPassword = !showPassword"
+              @click:append="showPassword = !showPassword"
               maxlength="30"
               required
             ></v-text-field>
             <v-text-field
               v-model="passwordConfirmation"
+              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               label="Password Confirmation"
+              :type="showPassword ? 'text' : 'password'"
               :rules="[(password === passwordConfirmation) || 'Must match the password above']"
               counter
-               @click:append="showPassword = !showPassword"
+              @click:append="showPassword = !showPassword"
               maxlength="30"
               required
             ></v-text-field>
             <v-row class="mt-5">
-              <v-btn
-                @click="registerEvent()"
-                :loading="registerLoading"
-                color="primary"
-              >Register</v-btn>
+              <v-btn @click="registerEvent()" :loading="registerLoading" color="primary">Register</v-btn>
               <v-spacer />
               <v-btn text color="secondary" @click="pushToLogin()">I have an account</v-btn>
             </v-row>
@@ -78,8 +79,10 @@ export default {
         v => (v && v.trim().length > 0) || "Enter a valid name"
       ],
       passwordConfirmation: "",
-      passwordRules: [v => !!v || "Password is required",
-                      v => (!!v && v.trim().length >= 1) || "Must be more than 7 characters"],
+      passwordRules: [
+        v => !!v || "Password is required",
+        v => (!!v && v.trim().length >= 1) || "Must be more than 7 characters"
+      ],
       valid: true,
       showPassword: false
     };
@@ -93,9 +96,9 @@ export default {
         this.password === this.passwordConfirmation || "Passwords must match"
       );
     },
-    registerError () {
-        return this.$store.state.authentication.registerError;
-    },
+    registerError() {
+      return this.$store.state.authentication.registerError;
+    }
   },
   methods: {
     registerEvent() {
@@ -117,14 +120,14 @@ export default {
   },
   mounted() {},
   watch: {
-      registerError (val) {
-          if (val) {
-              this.showSnackBar({
-                  text: val,
-                  color: 'error'
-              });
-          }
+    registerError(val) {
+      if (val) {
+        this.showSnackBar({
+          text: val,
+          color: "error"
+        });
       }
+    }
   }
 };
 </script>
