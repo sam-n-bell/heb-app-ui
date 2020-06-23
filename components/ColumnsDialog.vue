@@ -1,27 +1,31 @@
 <template>
-  <v-dialog v-model="columnsDialog.visible" persistent max-width="550">
+  <v-dialog v-model="columnsDialog.visible" persistent max-width="500">
     <v-card class="m-4">
       <v-card-text>
-          <v-row>
-        <v-col cols="12">
-          <v-select
-            v-model="selectedColumns"
-            :items="columnsDialog.allColumns"
-            item-text="text"
-            multiple
-            label="Select Columns"
-            return-object
-          >
-            <template slot="item" slot-scope="{ item }">{{ item.text | capitalizeEachWord}}</template>
-            <template v-slot:selection="{ item, index }">
-              <v-chip v-if="index === 0">
-                <span>{{ item.text | capitalizeEachWord }}</span>
-              </v-chip>
-              <span v-if="index === 1" class="grey--text caption">(+{{ selectedColumns.length - 1 }} others)</span>
-            </template>
-          </v-select>
-        </v-col>
-      </v-row>
+        <v-row>
+          <v-spacer />
+          <v-col cols="9">
+            <v-select
+              v-model="selectedColumns"
+              :items="columnsDialog.allColumns"
+              item-text="text"
+              multiple
+              label="Select Columns to Show"
+              return-object
+            >
+              <template slot="item" slot-scope="{ item }">{{ item.text | capitalizeEachWord}}</template>
+              <template v-slot:selection="{ item, index }">
+                <v-chip v-if="index === 0">
+                  <span>{{ item.text | capitalizeEachWord }}</span>
+                </v-chip>
+                <span
+                  v-if="index === 1"
+                  class="grey--text caption"
+                >(+{{ selectedColumns.length - 1 }} others)</span>
+              </template>
+            </v-select>
+          </v-col>
+        </v-row>
       </v-card-text>
       <v-card-actions>
         <v-btn
