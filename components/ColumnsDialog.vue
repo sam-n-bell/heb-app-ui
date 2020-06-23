@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="columnsDialog.visible" persistent max-width="500">
+  <v-dialog v-model="columnsDialog.visible" persistent max-width="550">
     <v-card class="m-4">
       <v-card-text>
           <v-row>
@@ -10,7 +10,7 @@
             item-text="text"
             multiple
             label="Select Columns"
-            return-object=""
+            return-object
           >
             <template slot="item" slot-scope="{ item }">{{ item.text | capitalizeEachWord}}</template>
             <template v-slot:selection="{ item, index }">

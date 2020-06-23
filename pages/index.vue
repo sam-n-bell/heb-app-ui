@@ -11,14 +11,27 @@
       <v-row>
         <v-col cols="12">
             <v-data-table :headers="columns.selectedColumns" :items="products.payload.products">
+              <template v-slot:item.description=" { item }">
+                {{item.description | capitalizeEachWord}}
+              </template>
+              <template v-slot:item.department=" { item }">
+                {{item.department | capitalizeEachWord}}
+              </template>
+              <template v-slot:item.shelf_life_days=" { item }">
+                {{item.shelf_life_days }} days
+              </template>
               <template v-slot:item.sell_price=" { item }">
-                ${{item.sell_price}}
+                ${{item.sell_price | moneyPrecision}}
               </template>
               <template v-slot:item.cost_expense=" { item }">
-                ${{item.cost_expense}}
+                ${{item.cost_expense | moneyPrecision}}
               </template>
               <template v-slot:item.last_sold=" { item }">
                 {{ $moment(item.last_sold).format('M/D/YYYY')}}
+              </template>
+              <template v-slot:item.unit=" { item }">
+                <span v-if="item.unit && item.unit.toLowerCase() === 'each'">{{item.unit | capitalizeEachWord}}</span>
+                <span v-else>{{item.unit}}</span>
               </template>
             </v-data-table>
         </v-col>

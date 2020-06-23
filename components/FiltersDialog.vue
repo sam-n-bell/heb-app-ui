@@ -23,7 +23,7 @@
                 <v-subheader>Description of Product</v-subheader>
               </v-col>
               <v-col cols="6">
-                <v-text-field v-model="filters.description" label="Onion" clearable></v-text-field>
+                <v-text-field v-model="filters.description" hint="Onion" label="Description (can be partial match)" clearable></v-text-field>
               </v-col>
             </v-row>
           </v-expansion-panel-content>
