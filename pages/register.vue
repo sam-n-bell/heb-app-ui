@@ -29,6 +29,7 @@
               label="Password"
               :rules="passwordRules"
               counter
+               @click:append="showPassword = !showPassword"
               maxlength="30"
               required
             ></v-text-field>
@@ -37,6 +38,7 @@
               label="Password Confirmation"
               :rules="[(password === passwordConfirmation) || 'Must match the password above']"
               counter
+               @click:append="showPassword = !showPassword"
               maxlength="30"
               required
             ></v-text-field>
@@ -78,7 +80,8 @@ export default {
       passwordConfirmation: "",
       passwordRules: [v => !!v || "Password is required",
                       v => (!!v && v.trim().length >= 1) || "Must be more than 7 characters"],
-      valid: true
+      valid: true,
+      showPassword: false
     };
   },
   computed: {
